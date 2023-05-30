@@ -7,6 +7,21 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({ 
+      workbox: {
+        runtimeCaching: [{
+          handler: 'NetworkOnly',
+          urlPattern: /^http:\/\/api\.weatherstack\.com\/.*/i,
+          method: 'POST',
+          options: {
+            backgroundSync: {
+              name: 'myQueueName',
+              options: {
+                maxRetentionTime: 24 * 60
+              }
+            }
+          }
+        }]
+      },
       registerType: 'autoUpdate',
       manifest:{
         "theme_color": "#f69435",
@@ -14,8 +29,8 @@ export default defineConfig({
         "display": "standalone",
         "scope": "/",
         "start_url": "/",
-        "name": "telephone_arabe",
-        "short_name": "tel_arabe",
+        "name": "meteo",
+        "short_name": "meteo",
         "icons": [
             {
                 "src": "/icon-192x192.png",
